@@ -1,30 +1,34 @@
 var Letter = require("./letter.js");
 
 function Word(word) {
-    this.word = word;
-    this.letters = [];
-
-
+    this.letters = word;
 }
 
-Word.prototype.createLetterArray = function () {
-    for (var i = 0; i < this.word.length; i++) {
-        var newLetterObj = new Letter(this.word.charAt(i));
-        this.letters.push(newLetterObj);
-    }
-}
+
 
 Word.prototype.displayWord = function () {
+    var displayWord = "";
     for (var i = 0; i < this.letters.length; i++) {
-        this.letters[i].displayCharacter();
+        displayWord += this.letters[i].displayCharacter();
     }
+    return displayWord;//will give string
 }
 
 Word.prototype.compareLetterToWord = function (guessedLetter) {
     for (var i = 0; i < this.letters.length; i++) {
-        this.letters[i].checkGuessedLetter(guessedLetter);
+        if (this.letters[i].letter.toLowerCase() == guessedLetter) {
+            this.letters[i].checkGuessedLetter(guessedLetter);
+        }
     }
 }
+
+// var word = new Word([new Letter ('a'),new Letter ('b'), new Letter ('c'), new Letter('d')]);
+// console.log(word);
+// console.log(word.displayWord());
+// word.compareLetterToWord('b');
+// console.log(word.displayWord());
+
+module.exports = Word;
 
 
 // * An array of `new` Letter objects representing the letters of the underlying word
