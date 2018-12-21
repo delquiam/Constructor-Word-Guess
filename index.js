@@ -2,17 +2,19 @@ var Word = require("./word.js");
 var Letter = require("./letter.js");
 var inquirer = require("inquirer");
 
-var coffee = ['Cafe Latte',
-    'Iced Coffee',
-    'Frappucino',
-    'Cappucino',
+var starbucks = [
+    'Coffee',
+    'Frappuccino',
+    'Cappuccino',
     'Macchiato',
-    'Cold Brew',
-    'Mocha'
+    'Americano',
+    'Mocha',
+    'Espresso',
+    'Latte'
 ];
-var guessesLeft = 8;
+var guessesLeft = 11;
 var userGuesses = [];
-var holder = new Word("");//holds the word for game
+var coffee = new Word("");//holds the word for game
 
 
 Word.prototype.createLetterArray = function (word) {
@@ -24,31 +26,62 @@ Word.prototype.createLetterArray = function (word) {
     this.letters = arr;
 }
 
-var luckyLetter = coffee[Math.floor(Math.random() * coffee.length)];
-holder.createLetterArray(luckyLetter);
-console.log(holder.displayWord());
+function newGame(){
+var luckyLetter = starbucks[Math.floor(Math.random() * starbucks.length)];
+coffee.createLetterArray(luckyLetter);
+console.log(coffee.displayWord());
+}
 
 function guessMyDrink() {
     inquirer
         .prompt([
             {
                 type: 'input',
-                message: 'Pick a letter',
+                message: 'Guess a letter',
                 name: 'letter'
             }
         ])
         .then(answers => {
-            holder.compareLetterToWord(answers.letter.toLowerCase());
-            console.log(holder.displayWord());
+            coffee.compareLetterToWord(answers.letter.toLowerCase());
+            console.log(coffee.displayWord());
+//guesses left --
             if (guessesLeft === 0) {
                 console.log('Sorry, you lost the game');
             }
-            else if(holder.displayWord().indexOf("_")==-1){
+            else if (coffee.displayWord().indexOf("_") == -1) {
                 console.log('You Win!');
             }
-            else{
+            else {
                 guessMyDrink();
             }
         });
 }
+
+function gameOver() {
+    {
+        console.log('Game Over!')
+    }
+    inquirer
+        .prompt([
+            {
+                type: 'confirm',
+                message: 'Would you like to play again?',
+                name: 'playAgain'
+            }
+        ])
+        .then(answers => {
+            if (answers.playAgain) {
+                newGame();
+                print();
+                guessMyDrink();
+            } else {
+                console.log("No worries, see you next time!")
+            }
+        })
+}
+
+
+newGame();
 guessMyDrink();
+
+
