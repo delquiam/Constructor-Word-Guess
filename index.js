@@ -44,7 +44,7 @@ function guessMyDrink() {
         .then(answers => {
             coffee.compareLetterToWord(answers.letter.toLowerCase());
             console.log(coffee.displayWord());
-//guesses left --
+//add guesses left --
             if (guessesLeft === 0) {
                 console.log('Sorry, you lost the game');
             }
@@ -72,14 +72,13 @@ function gameOver() {
         .then(answers => {
             if (answers.playAgain) {
                 newGame();
-                print();
                 guessMyDrink();
             } else {
                 console.log("No worries, see you next time!")
             }
         })
 }
-
+//restart game
 
 newGame();
 guessMyDrink();
